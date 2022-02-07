@@ -50,6 +50,7 @@ router.put("/signup", isLoggedOut, (req, res, next) => {
                     password: hashedPassword,
                     verified,
                     verifyToken,
+                    balance: 0,
                 })
             })
             .then(user => {

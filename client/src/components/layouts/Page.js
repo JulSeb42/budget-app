@@ -1,14 +1,18 @@
 // Packages
-import React from "react"
+import React, { useContext } from "react"
 import { Helmet, Wrapper, Main } from "components-react-julseb"
 
 // Components
+import { AuthContext } from "../../context/auth"
 import Header from "./Header"
+import AddModal from "../transactions/AddModal"
 
 // Data
 import SiteData from "../data/SiteData"
 
 function Page(props) {
+    const { isLoggedIn } = useContext(AuthContext)
+
     return (
         <>
             <Helmet
@@ -23,11 +27,13 @@ function Page(props) {
                 language={SiteData.Language}
             />
 
-            <Header />
+            {isLoggedIn && <Header />}
 
             <Wrapper template={props.template}>
                 <Main>{props.children}</Main>
             </Wrapper>
+
+            {isLoggedIn && <AddModal />}
         </>
     )
 }

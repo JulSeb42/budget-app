@@ -37,7 +37,7 @@ function Login() {
     }
 
     return isLoggedIn ? (
-        <Navigate to="/my-account" />
+        <Navigate to="/" />
     ) : (
         <Page title="Login" template="form">
             <Font.H1>Login</Font.H1>

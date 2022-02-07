@@ -38,12 +38,22 @@ function Switch() {
 
     return (
         <Routes>
-            <Route path="/" element={<Home />} />
+            <Route
+                path="/"
+                element={
+                    <ProtectedRoutes>
+                        <Home />
+                    </ProtectedRoutes>
+                }
+            />
 
             {/* Auth */}
             <Route path="/signup" element={<Signup />} />
+            
             <Route path="/login" element={<Login />} />
+            
             <Route path="/thank-you" element={<ThankYou />} />
+            
             {allUsers.map(user => (
                 <Route
                     path={`/verify/${user.verifyToken}/${user._id}`}
@@ -55,11 +65,14 @@ function Switch() {
                     key={`${user.verifyToken}/${user._id}`}
                 />
             ))}
+            
             <Route path="/login/forgot-password" element={<ForgotPassword />} />
+            
             <Route
                 path="/login/forgot-password/email-sent"
                 element={<ForgotSent />}
             />
+            
             {allUsers.map(user => (
                 <Route
                     path={`/reset-password/${user.resetToken}/${user._id}`}
@@ -67,6 +80,7 @@ function Switch() {
                     key={`${user.resetToken}-${user._id}`}
                 />
             ))}
+            
             <Route path="/goodbye" element={<Goodbye />} />
 
             {/* User */}
@@ -78,6 +92,7 @@ function Switch() {
                     </ProtectedRoutes>
                 }
             />
+
             <Route
                 path="/my-account/edit"
                 element={
@@ -86,6 +101,7 @@ function Switch() {
                     </ProtectedRoutes>
                 }
             />
+            
             <Route
                 path="/my-account/edit-password"
                 element={

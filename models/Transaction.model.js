@@ -3,16 +3,17 @@ const { Schema, model } = require("mongoose")
 const transactionSchema = new Schema(
     {
         title: String,
+
+        amount: Number,
+
         date: String,
-        time: String,
+
         type: {
             enum: ["income", "expense"],
             type: String,
         },
-        category: {
-            type: Schema.Types.ObjectId,
-            ref: "Category",
-        },
+
+        category: String,
     },
     {
         timestamps: true,

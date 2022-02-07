@@ -17,6 +17,11 @@ const Container = styled.header`
     align-items: center;
     justify-content: space-between;
     padding: ${Variables.Margins.L} 5vw;
+    background-color: ${Variables.Colors.Primary500};
+
+    a, button {
+        color: ${Variables.Colors.White};
+    }
 `
 
 const Burger = styled.button`

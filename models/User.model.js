@@ -8,21 +8,30 @@ const userSchema = new Schema(
             required: true,
             unique: true,
         },
+        
         fullName: {
             type: String,
             required: true,
         },
+        
         password: String,
+        
         verified: Boolean,
+        
         verifyToken: String,
+        
         resetToken: String,
+        
         balance: Number,
+        
         transactions: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "Transaction",
             },
         ],
+        
+        categories: Array,
     },
     {
         timestamps: true,
