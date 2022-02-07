@@ -28,7 +28,6 @@ function ForgotPassword() {
         axios
             .put("/auth/forgot", requestBody)
             .then(res => {
-                console.log(res)
                 navigate("/login/forgot-password/email-sent")
             })
             .catch(err => {

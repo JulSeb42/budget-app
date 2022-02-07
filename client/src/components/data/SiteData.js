@@ -1,5 +1,5 @@
 const SiteData = {
-    Name: "App name",
+    Name: "Budget app",
     Description: "",
     Favicon: "/favicon.ico",
     Email: "",

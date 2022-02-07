@@ -21,8 +21,8 @@ const userSchema = new Schema(
         verifyToken: String,
         
         resetToken: String,
-        
-        balance: Number,
+
+        currency: String,
         
         transactions: [
             {

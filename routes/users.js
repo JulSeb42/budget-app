@@ -8,6 +8,7 @@ const saltRounds = 10
 // Get all users
 router.get("/user", (req, res, next) => {
     User.find()
+        .populate("transactions")
         .then(userFromDb => {
             res.status(200).json(userFromDb)
         })
@@ -17,6 +18,7 @@ router.get("/user", (req, res, next) => {
 // Get user by ID
 router.get("/user/:id", (req, res, next) => {
     User.findById(req.params.id)
+        .populate("transactions")
         .then(userFromDb => res.status(200).json(userFromDb))
         .catch(err => next(err))
 })

@@ -51,6 +51,7 @@ router.put("/signup", isLoggedOut, (req, res, next) => {
                     verified,
                     verifyToken,
                     balance: 0,
+                    currency: "EUR",
                 })
             })
             .then(user => {

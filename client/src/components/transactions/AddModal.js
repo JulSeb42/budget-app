@@ -52,15 +52,13 @@ function AddModal() {
 
     // Form
     const [categories, setCategories] = useState([])
-    const [balance, setBalance] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         axios
             .get(`/users/user/${user._id}`)
             .then(res => {
-                setCategories(res.data.categories)
-                setBalance(res.data.balance)
+                setCategories(res.data.categories.sort())
                 setIsLoading(false)
             })
             .catch(err => console.log(err))
@@ -116,10 +114,6 @@ function AddModal() {
             category: newCategory === "" ? category : slugify(newCategory),
             newCategory: newCategory !== "" && slugify(newCategory),
             user,
-            newBalance:
-                type === "expense"
-                    ? balance - amount
-                    : balance + amount,
         }
 
         axios
@@ -130,8 +124,6 @@ function AddModal() {
                 setErrorMessage(errorDescription)
             })
     }
-
-    console.log(balance - amount)
 
     return (
         <>
@@ -165,7 +157,8 @@ function AddModal() {
                                 label="Amount"
                                 id="amount"
                                 type="number"
-                                min="0"
+                                    min="0"
+                                    step="0.01"
                                 onChange={handleAmount}
                                 value={amount}
                             />
@@ -208,11 +201,13 @@ function AddModal() {
                                     onChange={handleCategory}
                                     value={category}
                                 >
-                                    {uniqCategories.map((category, i) => (
-                                        <option value={category} key={i}>
-                                            {unslugify(category)}
-                                        </option>
-                                    ))}
+                                    {uniqCategories
+                                        .filter(category => category !== false)
+                                        .map((category, i) => (
+                                            <option value={category} key={i}>
+                                                {unslugify(category)}
+                                            </option>
+                                        ))}
                                 </Input>
                             )}
 
