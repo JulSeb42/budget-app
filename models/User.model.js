@@ -16,6 +16,13 @@ const userSchema = new Schema(
         verified: Boolean,
         verifyToken: String,
         resetToken: String,
+        balance: Number,
+        transactions: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Transaction",
+            },
+        ],
     },
     {
         timestamps: true,
