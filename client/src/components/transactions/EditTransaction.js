@@ -1,9 +1,8 @@
 // Packages
-import React, { useContext, useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import styled from "styled-components"
 import axios from "axios"
 import {
-    ButtonIcon,
     Modal,
     Form,
     Input,
@@ -14,6 +13,7 @@ import {
     slugify,
     Alert,
     Loader,
+    Button,
 } from "components-react-julseb"
 
 // Components
@@ -24,13 +24,6 @@ import { Selector, SelectorsContainer } from "../ui/Selector"
 import unslugify from "../utils/unslugify"
 
 // Styles
-const AddButton = styled(ButtonIcon)`
-    position: fixed;
-    bottom: ${Variables.Margins.XXL};
-    right: ${Variables.Margins.XXL};
-    box-shadow: ${Variables.Shadows.XL};
-`
-
 const Container = styled(Form)`
     background-color: ${Variables.Colors.White};
     padding: ${Variables.Margins.M};
@@ -38,7 +31,7 @@ const Container = styled(Form)`
     border-radius: ${Variables.Radiuses.M};
 `
 
-function AddModal() {
+function EditTransaction({ transaction }) {
     const { user } = useContext(AuthContext)
 
     // Modal
@@ -64,19 +57,13 @@ function AddModal() {
             .catch(err => console.log(err))
     }, [user._id])
 
-    const [title, setTitle] = useState("")
-    const [amount, setAmount] = useState(0)
-    const [date, setDate] = useState(getToday())
-    const [type, setType] = useState("expense")
-    const [category, setCategory] = useState("")
+    const [title, setTitle] = useState(transaction.title)
+    const [amount, setAmount] = useState(transaction.amount)
+    const [date, setDate] = useState(transaction.date)
+    const [type, setType] = useState(transaction.type)
+    const [category, setCategory] = useState(transaction.category)
     const [newCategory, setNewCategory] = useState("")
     const [errorMessage, setErrorMessage] = useState(undefined)
-
-    useEffect(() => {
-        if (!isLoading && categories.length > 0) {
-            setCategory(categories[0])
-        } 
-    }, [categories, isLoading])
 
     const uniqCategories = [...new Set(categories)]
 
@@ -96,10 +83,10 @@ function AddModal() {
 
     const handleCancel = () => {
         setIsOpen(false)
-        setTitle("")
-        setDate(getToday())
-        setType("expense")
-        setCategory("")
+        setTitle(transaction.title)
+        setDate(transaction.date)
+        setType(transaction.type)
+        setCategory(transaction.category)
         setNewCategory("")
     }
 
@@ -117,7 +104,10 @@ function AddModal() {
         }
 
         axios
-            .post("/transactions/new-transaction", requestBody)
+            .put(
+                `/transactions/edit-transaction/${transaction._id}`,
+                requestBody
+            )
             .then(() => window.location.reload(false))
             .catch(err => {
                 const errorDescription = err.response.data.message
@@ -127,11 +117,9 @@ function AddModal() {
 
     return (
         <>
-            <AddButton
-                icon="plus"
-                color="primary"
-                onClick={() => setIsOpen(true)}
-            />
+            <Button btnstyle="text" nopadding onClick={() => setIsOpen(true)}>
+                Edit
+            </Button>
 
             <Modal className={isOpen ? "open" : ""}>
                 <Container
@@ -144,7 +132,7 @@ function AddModal() {
                         <Loader />
                     ) : (
                         <>
-                            <Font.H4>Add a new transaction</Font.H4>
+                            <Font.H4>Edit {transaction.title}</Font.H4>
 
                             <Input
                                 label="Title"
@@ -157,8 +145,8 @@ function AddModal() {
                                 label="Amount"
                                 id="amount"
                                 type="number"
-                                    min="0"
-                                    step="0.01"
+                                min="0"
+                                step="0.01"
                                 onChange={handleAmount}
                                 value={amount}
                             />
@@ -178,7 +166,10 @@ function AddModal() {
                                         label="Expense"
                                         id="expense"
                                         name="typeTransaction"
-                                        defaultChecked={true}
+                                        defaultChecked={
+                                            transaction.type === "expense" &&
+                                            true
+                                        }
                                         value="expense"
                                         onChange={handleType}
                                     />
@@ -187,29 +178,31 @@ function AddModal() {
                                         label="Income"
                                         id="income"
                                         name="typeTransaction"
+                                        defaultChecked={
+                                            transaction.type === "income" &&
+                                            true
+                                        }
                                         value="income"
                                         onChange={handleType}
                                     />
                                 </SelectorsContainer>
                             </InputContainer>
 
-                            {categories.length > 0 && (
-                                <Input
-                                    label="Category"
-                                    type="select"
-                                    id="category"
-                                    onChange={handleCategory}
-                                    value={category}
-                                >
-                                    {uniqCategories
-                                        .filter(category => category !== false)
-                                        .map((category, i) => (
-                                            <option value={category} key={i}>
-                                                {unslugify(category)}
-                                            </option>
-                                        ))}
-                                </Input>
-                            )}
+                            <Input
+                                label="Category"
+                                type="select"
+                                id="category"
+                                onChange={handleCategory}
+                                value={category}
+                            >
+                                {uniqCategories
+                                    .filter(category => category !== false)
+                                    .map((category, i) => (
+                                        <option value={category} key={i}>
+                                            {unslugify(category)}
+                                        </option>
+                                    ))}
+                            </Input>
 
                             <Input
                                 label="Add a new category"
@@ -229,4 +222,4 @@ function AddModal() {
     )
 }
 
-export default AddModal
+export default EditTransaction

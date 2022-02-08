@@ -6,10 +6,13 @@ import {
     Variables,
     convertDateShort,
     TitleFlex,
-    Button,
     ButtonsContainer,
     Grid,
 } from "components-react-julseb"
+
+// Components
+import EditTransaction from "./EditTransaction"
+import DeleteTransaction from "./DeleteTransaction"
 
 // Utils
 import unslugify from "../utils/unslugify"
@@ -20,7 +23,7 @@ const Container = styled(Grid)`
     padding: ${Variables.Margins.M};
     border-radius: ${Variables.Radiuses.M};
     background-color: ${Variables.Colors.White};
-    box-shadow: ${Variables.Shadows.L};
+    box-shadow: ${Variables.Shadows.M};
 `
 
 const Amount = styled(Font.Strong)`
@@ -44,39 +47,36 @@ const Date = styled(Font.P)`
 
 function CardTransaction({ transaction, ...props }) {
     return (
-        <Container gap={Variables.Margins.S}>
-            <TitleFlex>
-                <Grid gap={Variables.Margins.XXS}>
-                    <Font.H4>{transaction.title}</Font.H4>
-                    <Font.P>{unslugify(transaction.category)}</Font.P>
-                </Grid>
+        <>
+            <Container gap={Variables.Margins.S}>
+                <TitleFlex>
+                    <Grid gap={Variables.Margins.XXS}>
+                        <Font.H4>{transaction.title}</Font.H4>
+                        <Font.P>{unslugify(transaction.category)}</Font.P>
+                    </Grid>
 
-                <Grid gap={Variables.Margins.XXS}>
-                    <Amount
-                        className={
-                            transaction.type === "income"
-                                ? "positive"
-                                : "negative"
-                        }
-                    >
-                        {transaction.type === "income" ? "+" : "-"}{" "}
-                        {formatAmount(transaction.amount, props.currency)}
-                    </Amount>
+                    <Grid gap={Variables.Margins.XXS}>
+                        <Amount
+                            className={
+                                transaction.type === "income"
+                                    ? "positive"
+                                    : "negative"
+                            }
+                        >
+                            {transaction.type === "income" ? "+" : "-"}{" "}
+                            {formatAmount(transaction.amount, props.currency)}
+                        </Amount>
 
-                    <Date>{convertDateShort(transaction.date)}</Date>
-                </Grid>
-            </TitleFlex>
+                        <Date>{convertDateShort(transaction.date)}</Date>
+                    </Grid>
+                </TitleFlex>
 
-            <ButtonsContainer>
-                <Button btnstyle="text" nopadding>
-                    Edit
-                </Button>
-
-                <Button btnstyle="text" color="danger" nopadding>
-                    Delete
-                </Button>
-            </ButtonsContainer>
-        </Container>
+                <ButtonsContainer>
+                    <EditTransaction transaction={transaction} />
+                    <DeleteTransaction transaction={transaction} />
+                </ButtonsContainer>
+            </Container>
+        </>
     )
 }
 

@@ -112,4 +112,10 @@ router.put("/edit-transaction/:id", (req, res, next) => {
     //     .catch(err => next(err))
 })
 
+router.delete("/delete-transaction/:id", (req, res, next) => {
+    Transaction.findByIdAndDelete(req.params.id)
+        .then(() => res.status(200).json({ message: "Transaction deleted" }))
+        .catch(err => next(err))
+})
+
 module.exports = router
