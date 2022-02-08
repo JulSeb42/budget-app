@@ -1,6 +1,8 @@
 // Packages
 import React, { useContext } from "react"
+import { useLocation } from "react-router-dom"
 import { Helmet, Wrapper, Main } from "components-react-julseb"
+import styled from "styled-components"
 
 // Components
 import { AuthContext } from "../../context/auth"
@@ -10,8 +12,14 @@ import AddModal from "../transactions/AddModal"
 // Data
 import SiteData from "../data/SiteData"
 
+// Styles
+const Container = styled(Wrapper)`
+    grid-template-columns: 1fr 800px 1fr;
+`
+
 function Page(props) {
     const { isLoggedIn } = useContext(AuthContext)
+    const location = useLocation().pathname
 
     return (
         <>
@@ -29,9 +37,15 @@ function Page(props) {
 
             {isLoggedIn && <Header />}
 
-            <Wrapper template={props.template}>
-                <Main>{props.children}</Main>
-            </Wrapper>
+            {location === "/" ? (
+                <Container>
+                    <Main>{props.children}</Main>
+                </Container>
+            ) : (
+                <Wrapper template={props.template}>
+                    <Main>{props.children}</Main>
+                </Wrapper>
+            )}
 
             {isLoggedIn && <AddModal />}
         </>

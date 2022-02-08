@@ -114,6 +114,7 @@ function AddModal() {
             category: newCategory === "" ? category : slugify(newCategory),
             newCategory: newCategory !== "" && slugify(newCategory),
             user,
+            dateAdded: getToday(),
         }
 
         axios

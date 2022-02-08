@@ -8,12 +8,16 @@ const transactionSchema = new Schema(
 
         date: String,
 
+        dateShort: String,
+
         type: {
             enum: ["income", "expense"],
             type: String,
         },
 
         category: String,
+
+        dateAdded: String,
     },
     {
         timestamps: true,

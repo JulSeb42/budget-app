@@ -15,7 +15,7 @@ router.get("/transaction/:id", (req, res, next) => {
 })
 
 router.post("/new-transaction", (req, res, next) => {
-    const { title, date, type, category, newCategory, user, amount } = req.body
+    const { title, date, type, category, newCategory, user, amount, dateAdded } = req.body
 
     if (!title) {
         return res.status(400).json({ message: "The title is required" })
@@ -25,7 +25,7 @@ router.post("/new-transaction", (req, res, next) => {
         return res.status(400).json({ message: "The category is required" })
     }
 
-    Transaction.create({ title, date, type, category, amount })
+    Transaction.create({ title, date, type, category, amount, dateAdded })
         .then(createdTransaction => {
             User.findByIdAndUpdate(
                 user._id,
