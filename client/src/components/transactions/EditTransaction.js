@@ -16,8 +16,10 @@ import {
 } from "components-react-julseb"
 
 // Components
+import ButtonCardTransaction from "../ui/ButtonCardTransaction"
+
+// Components
 import { AuthContext } from "../../context/auth"
-import ButtonNav from "../ui/ButtonNav"
 import { Selector, SelectorsContainer } from "../ui/Selector"
 
 // Utils
@@ -32,7 +34,7 @@ const Container = styled(Form)`
     max-width: calc(400px + (${Variables.Margins.M} * 2));
 `
 
-function AddTransaction(props) {
+function EditTransaction({ transaction }) {
     const { user } = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(true)
 
@@ -52,11 +54,11 @@ function AddTransaction(props) {
     const uniqCategories = [...new Set(allCategories)]
 
     // Form
-    const [title, setTitle] = useState("")
-    const [amount, setAmount] = useState(0)
-    const [date, setDate] = useState(getToday())
-    const [type, setType] = useState("expense")
-    const [category, setCategory] = useState(allCategories[0])
+    const [title, setTitle] = useState(transaction.title)
+    const [amount, setAmount] = useState(transaction.amount)
+    const [date, setDate] = useState(transaction.date)
+    const [type, setType] = useState(transaction.type)
+    const [category, setCategory] = useState(transaction.category)
     const [newCategory, setNewCategory] = useState("")
     const [errorMessage, setErrorMessage] = useState(undefined)
 
@@ -99,7 +101,10 @@ function AddTransaction(props) {
         }
 
         axios
-            .post("/transactions/new-transaction", requestBody)
+            .put(
+                `/transactions/edit-transaction/${transaction._id}`,
+                requestBody
+            )
             .then(() => window.location.reload(false))
             .catch(err => {
                 const errorDescription = err.response.data.message
@@ -109,10 +114,8 @@ function AddTransaction(props) {
 
     return (
         <>
-            <ButtonNav
-                icon="plus"
-                aria-label="Add a new transaction"
-                className={props.classBtn}
+            <ButtonCardTransaction
+                icon="edit"
                 onClick={() => setIsOpen(true)}
             />
 
@@ -123,7 +126,7 @@ function AddTransaction(props) {
                     onClickReset={handleReset}
                     onSubmit={handleSubmit}
                 >
-                    <Font.H4>New transaction</Font.H4>
+                    <Font.H4>Edit {transaction.title}</Font.H4>
 
                     {isLoading ? (
                         <Loader />
@@ -161,7 +164,10 @@ function AddTransaction(props) {
                                         label="Expense"
                                         id="expense"
                                         name="typeTransaction"
-                                        defaultChecked={true}
+                                        defaultChecked={
+                                            transaction.type === "expense" &&
+                                            true
+                                        }
                                         value="expense"
                                         onChange={handleType}
                                     />
@@ -171,6 +177,10 @@ function AddTransaction(props) {
                                         id="income"
                                         name="typeTransaction"
                                         value="income"
+                                        defaultChecked={
+                                            transaction.type === "income" &&
+                                            true
+                                        }
                                         onChange={handleType}
                                     />
                                 </SelectorsContainer>
@@ -211,4 +221,4 @@ function AddTransaction(props) {
     )
 }
 
-export default AddTransaction
+export default EditTransaction

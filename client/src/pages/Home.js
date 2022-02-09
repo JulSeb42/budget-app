@@ -146,7 +146,7 @@ function Home() {
 
                     {/* List incomes & expenses */}
 
-                    <Card>
+                    <Card style={{ padding: `0 ${Variables.Margins.M} 0 ${Variables.Margins.M}`}}>
                         <ListTransactions>
                             {allTransactions.map(transaction => (
                                 <CardTransaction

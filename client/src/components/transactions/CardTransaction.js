@@ -1,46 +1,78 @@
 // Packages
 import React from "react"
 import styled from "styled-components"
-import { Font, Variables, Icon, ButtonsContainer } from "components-react-julseb"
+import {
+    Font,
+    Variables,
+    ButtonsContainer,
+    Grid,
+} from "components-react-julseb"
 
 // Components
 import Amount from "../ui/Amount"
+import EditTransaction from "./EditTransaction"
+import DeleteTransaction from "./DeleteTransaction"
 
 // Utils
 import formatAmount from "../utils/formatAmount"
 import unslugify from "../utils/unslugify"
 
 // Styles
-const ListTransactions = styled.div``
+const ListTransactions = styled(Grid)`
+    max-height: 100%;
+    overflow-y: scroll;
+    gap: ${Variables.Margins.S};
 
-const Container = styled.div``
+    & > div:first-child {
+        margin-top: ${Variables.Margins.M};
+    }
 
-const Button = styled.button``
+    & > div:last-child {
+        margin-bottom: ${Variables.Margins.M};
+    }
+
+    & > div:not(:last-child) {
+        padding-bottom: ${Variables.Margins.S};
+        border-bottom: 1px solid ${Variables.Colors.Gray100};
+    }
+`
+
+const Container = styled(Grid)``
+
+const Price = styled(Amount)`
+    justify-self: center;
+`
+
+const Buttons = styled(ButtonsContainer)`
+    justify-content: flex-end;
+`
 
 function CardTransaction({ transaction }) {
     return (
-        <Container>
-            <Font.H4>{transaction.title}</Font.H4>
+        <Container col={3}>
+            <Grid as="span" gap={Variables.Margins.XXS}>
+                <Font.H4>{transaction.title}</Font.H4>
 
-            <Font.P>{unslugify(transaction.category)}</Font.P>
+                <Font.P>{unslugify(transaction.category)}</Font.P>
+            </Grid>
 
-            <Amount
+            <Price
                 className={
                     transaction.type === "income" ? "positive" : "negative"
                 }
             >
                 {formatAmount(transaction.amount)}
-            </Amount>
+            </Price>
 
-            <ButtonsContainer>
-                <Button>
-                    <Icon name="edit" size={16} />
-                </Button>
+            <Buttons>
+                <EditTransaction transaction={transaction} />
 
-                <Button delete>
+                <DeleteTransaction transaction={transaction} />
+
+                {/* <Button delete>
                     <Icon name="trash" size={16} />
-                </Button>
-            </ButtonsContainer>
+                </Button> */}
+            </Buttons>
         </Container>
     )
 }
