@@ -1,3 +1,20 @@
 :root {
     /* Overrides page */
+    --color-primary-500: #2568fb;
+    --color-primary-300: #87acfd;
+    --color-primary-600: #0443cd;
+    --color-primary-50: #e6eeff;
+    --color-success-500: #00cc66;
+    --color-success-300: #33ff99;
+    --color-success-600: #008040;
+    --color-success-50: #e5fff2;
+    --color-danger-500: #cc2936;
+    --color-danger-300: #e47780;
+    --color-danger-600: #8c1c25;
+    --color-danger-50: #fbeaeb;
+}
+
+html,
+body {
+    background-color: #f2f2f2 !important;
 }
