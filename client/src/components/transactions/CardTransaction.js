@@ -6,6 +6,7 @@ import {
     Variables,
     ButtonsContainer,
     Grid,
+    convertDateShort,
 } from "components-react-julseb"
 
 // Components
@@ -47,11 +48,20 @@ const Buttons = styled(ButtonsContainer)`
     justify-content: flex-end;
 `
 
+const Date = styled.span`
+    font-size: ${Variables.FontSizes.Body};
+    font-weight: ${Variables.FontWeights.Regular};
+    color: ${Variables.Colors.Gray500};
+`
+
 function CardTransaction({ transaction }) {
     return (
         <Container col={3}>
             <Grid as="span" gap={Variables.Margins.XXS}>
-                <Font.H4>{transaction.title}</Font.H4>
+                <Font.H4>
+                    {transaction.title}{" "}
+                    <Date>・ {convertDateShort(transaction.date)}</Date>
+                </Font.H4>
 
                 <Font.P>{unslugify(transaction.category)}</Font.P>
             </Grid>
