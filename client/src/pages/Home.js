@@ -22,6 +22,7 @@ import {
     ListTransactions,
 } from "../components/transactions/CardTransaction"
 import Stat from "../components/ui/Stat"
+import AddTransaction from "../components/transactions/AddTransaction"
 
 // Utils
 import FormatAmount from "../components/utils/FormatAmount"
@@ -172,7 +173,8 @@ function Home() {
 
                 <AsymGrid>
                     {/* Filters */}
-                    <Card gap={Variables.Margins.XS}>
+                        <Card gap={Variables.Margins.XS}>
+                            <AddTransaction btnlarge />
                         <Input
                             label="Search"
                             id="search"

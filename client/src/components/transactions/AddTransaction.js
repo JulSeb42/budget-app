@@ -13,6 +13,7 @@ import {
     Loader,
     Alert,
     slugify,
+    Button,
 } from "components-react-julseb"
 
 // Components
@@ -109,12 +110,16 @@ function AddTransaction(props) {
 
     return (
         <>
-            <ButtonNav
-                icon="plus"
-                aria-label="Add a new transaction"
-                className={props.classBtn}
-                onClick={() => setIsOpen(true)}
-            />
+            {props.btnlarge ? (
+                <Button onClick={() => setIsOpen(true)}>New transaction</Button>
+            ) : (
+                <ButtonNav
+                    icon="plus"
+                    aria-label="Add a new transaction"
+                    className={props.classBtn}
+                    onClick={() => setIsOpen(true)}
+                />
+            )}
 
             <Modal className={isOpen ? "open" : ""}>
                 <Container
