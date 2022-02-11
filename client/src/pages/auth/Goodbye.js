@@ -1,6 +1,6 @@
 // Packages
 import React from "react"
-import { Font, Wrapper, Main } from "components-react-julseb"
+import { Font } from "components-react-julseb"
 
 // Components
 import Page from "../../components/layouts/Page"
@@ -8,13 +8,9 @@ import Page from "../../components/layouts/Page"
 function Goodbye() {
     return (
         <Page title="Goodbye!">
-            <Wrapper>
-                <Main>
-                    <Font.H1>We're sorry to see you go!</Font.H1>
+            <Font.H1>We're sorry to see you go!</Font.H1>
 
-                    <Font.P>Your account was deleted successfully.</Font.P>
-                </Main>
-            </Wrapper>
+            <Font.P>Your account was deleted successfully.</Font.P>
         </Page>
     )
 }

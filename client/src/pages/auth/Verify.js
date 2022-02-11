@@ -2,7 +2,7 @@
 import React, { useContext, useState } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
-import { Font, Alert, Wrapper, Main } from "components-react-julseb"
+import { Font, Alert } from "components-react-julseb"
 
 // Components
 import Page from "../../components/layouts/Page"
@@ -32,21 +32,14 @@ function Verify({ edited, setEdited }) {
 
     return (
         <Page title="Your account is verified!">
-            <Wrapper>
-                <Main>
-                    <Font.H1>Your account is verified!</Font.H1>
+            <Font.H1>Your account is verified!</Font.H1>
 
-                    <Font.P>
-                        You can now access all the functionalities on our
-                        website.{" "}
-                        <Link to="/">Go to your account</Link>.
-                    </Font.P>
+            <Font.P>
+                You can now access all the functionalities on our website.{" "}
+                <Link to="/">Go to your account</Link>.
+            </Font.P>
 
-                    {errorMessage && (
-                        <Alert color="danger">{errorMessage}</Alert>
-                    )}
-                </Main>
-            </Wrapper>
+            {errorMessage && <Alert color="danger">{errorMessage}</Alert>}
         </Page>
     )
 }

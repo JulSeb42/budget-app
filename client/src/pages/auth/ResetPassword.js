@@ -2,7 +2,12 @@
 import React, { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import { Font, Form, Input, Alert, Wrapper, Main } from "components-react-julseb"
+import {
+    Font,
+    Form,
+    Input,
+    Alert,
+} from "components-react-julseb"
 
 // Components
 import Page from "../../components/layouts/Page"
@@ -36,27 +41,21 @@ function ResetPassword() {
     }
 
     return (
-        <Page title="Reset your password">
-            <Wrapper template="form">
-                <Main>
-                    <Font.H1>Reset your password</Font.H1>
+        <Page title="Reset your password" template="form">
+            <Font.H1>Reset your password</Font.H1>
 
-                    <Form btnprimary="Send" onSubmit={handleSubmit}>
-                        <Input
-                            label="New password"
-                            inputtype="password"
-                            id="password"
-                            onChange={handlePassword}
-                            value={password}
-                            password
-                        />
-                    </Form>
+            <Form btnprimary="Send" onSubmit={handleSubmit}>
+                <Input
+                    label="New password"
+                    inputtype="password"
+                    id="password"
+                    onChange={handlePassword}
+                    value={password}
+                    password
+                />
+            </Form>
 
-                    {errorMessage && (
-                        <Alert color="danger">{errorMessage}</Alert>
-                    )}
-                </Main>
-            </Wrapper>
+            {errorMessage && <Alert color="danger">{errorMessage}</Alert>}
         </Page>
     )
 }

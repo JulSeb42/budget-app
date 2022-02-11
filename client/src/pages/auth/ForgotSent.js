@@ -1,6 +1,6 @@
 // Packages
 import React from "react"
-import { Font, Wrapper, Main } from "components-react-julseb"
+import { Font } from "components-react-julseb"
 
 // Components
 import Page from "../../components/layouts/Page"
@@ -8,16 +8,11 @@ import Page from "../../components/layouts/Page"
 function ForgotSent() {
     return (
         <Page title="Email sent successfully">
-            <Wrapper>
-                <Main>
-                    <Font.H1>Email sent successfully</Font.H1>
+            <Font.H1>Email sent successfully</Font.H1>
 
-                    <Font.P>
-                        We just sent you an email with a link to reset your
-                        password.
-                    </Font.P>
-                </Main>
-            </Wrapper>
+            <Font.P>
+                We just sent you an email with a link to reset your password.
+            </Font.P>
         </Page>
     )
 }

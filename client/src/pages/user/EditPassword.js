@@ -2,7 +2,12 @@
 import React, { useContext, useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import { Font, Form, Input, Alert, Wrapper, Main } from "components-react-julseb"
+import {
+    Font,
+    Form,
+    Input,
+    Alert,
+} from "components-react-julseb"
 
 // Components
 import { AuthContext } from "../../context/auth"
@@ -37,31 +42,25 @@ function EditPassword({ edited, setEdited }) {
     }
 
     return (
-        <Page title="Edit your password">
-            <Wrapper template="form">
-                <Main>
-                    <Font.H1>Edit your password</Font.H1>
+        <Page title="Edit your password" template="form">
+            <Font.H1>Edit your password</Font.H1>
 
-                    <Form
-                        btnprimary="Save changes"
-                        btncancel="/"
-                        onSubmit={handleSubmit}
-                    >
-                        <Input
-                            label="New password"
-                            inputtype="password"
-                            id="password"
-                            onChange={handlePassword}
-                            value={password}
-                            password
-                        />
-                    </Form>
+            <Form
+                btnprimary="Save changes"
+                btncancel="/"
+                onSubmit={handleSubmit}
+            >
+                <Input
+                    label="New password"
+                    inputtype="password"
+                    id="password"
+                    onChange={handlePassword}
+                    value={password}
+                    password
+                />
+            </Form>
 
-                    {errorMessage && (
-                        <Alert color="danger">{errorMessage}</Alert>
-                    )}
-                </Main>
-            </Wrapper>
+            {errorMessage && <Alert color="danger">{errorMessage}</Alert>}
         </Page>
     )
 }

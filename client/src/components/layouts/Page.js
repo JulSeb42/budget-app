@@ -31,7 +31,7 @@ function Page(props) {
             {isLoggedIn && <Header />}
 
             <Wrapper template={props.template}>
-                <Main>{props.children}</Main>
+                <Main template={props.template}>{props.children}</Main>
             </Wrapper>
         </>
     )
