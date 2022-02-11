@@ -8,6 +8,7 @@ import {
     PageLoading,
     Variables,
     Input,
+    TitleFlex,
 } from "components-react-julseb"
 
 // Components
@@ -20,9 +21,10 @@ import {
     CardTransaction,
     ListTransactions,
 } from "../components/transactions/CardTransaction"
+import Stat from "../components/ui/Stat"
 
 // Utils
-import formatAmount from "../components/utils/formatAmount"
+import FormatAmount from "../components/utils/FormatAmount"
 import convertMonth from "../components/utils/convertMonth"
 import unslugify from "../components/utils/unslugify"
 
@@ -112,6 +114,19 @@ function Home() {
         results = results.filter(transaction => transaction.type === type)
     }
 
+    // Get categories for type expense
+    const [showStats, setShowStats] = useState("expense")
+
+    const stats = [
+        ...new Set(
+            allTransactions
+                .filter(transaction => transaction.type === showStats)
+                .map(transaction => transaction.category)
+        ),
+    ]
+
+    const handleStats = e => setShowStats(e.target.value)
+
     return isLoading ? (
         <PageLoading />
     ) : (
@@ -133,7 +148,7 @@ function Home() {
                                     balance >= 0 ? "positive" : "negative"
                                 }
                             >
-                                {formatAmount(balance)}
+                                {FormatAmount(balance)}
                             </Amount>
                         </Font.H4>
                     </Card>
@@ -142,14 +157,14 @@ function Home() {
                         <Font.P>
                             Total incomes:{" "}
                             <Amount className="positive">
-                                {formatAmount(totalIncomes)}
+                                {FormatAmount(totalIncomes)}
                             </Amount>
                         </Font.P>
 
                         <Font.P>
                             Total expenses:{" "}
                             <Amount className="negative">
-                                {formatAmount(totalExpenses)}
+                                {FormatAmount(totalExpenses)}
                             </Amount>
                         </Font.P>
                     </Card>
@@ -246,9 +261,32 @@ function Home() {
                     </Card>
                 </AsymGrid>
 
-                <Grid>
-                    {/* List categories => slideshow, add filter expenses / incomes */}
-                </Grid>
+                <Card>
+                    <TitleFlex>
+                        <Font.H4>Categories</Font.H4>
+
+                        <Input
+                            type="select"
+                            style={{ width: "200px" }}
+                            onChange={handleStats}
+                            value={showStats}
+                        >
+                            <option value="expense">Expenses</option>
+                            <option value="income">Incomes</option>
+                        </Input>
+                    </TitleFlex>
+
+                    <Grid col={3} gap={Variables.Margins.L}>
+                        {stats.map((category, i) => (
+                            <Stat
+                                allTransactions={allTransactions}
+                                category={category}
+                                totalExpenses={totalExpenses}
+                                key={i}
+                            />
+                        ))}
+                    </Grid>
+                </Card>
             </Grid>
         </Page>
     )

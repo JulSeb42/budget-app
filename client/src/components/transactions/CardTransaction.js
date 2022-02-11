@@ -15,7 +15,7 @@ import EditTransaction from "./EditTransaction"
 import DeleteTransaction from "./DeleteTransaction"
 
 // Utils
-import formatAmount from "../utils/formatAmount"
+import FormatAmount from "../utils/FormatAmount"
 import unslugify from "../utils/unslugify"
 
 // Styles
@@ -71,17 +71,13 @@ function CardTransaction({ transaction }) {
                     transaction.type === "income" ? "positive" : "negative"
                 }
             >
-                {formatAmount(transaction.amount)}
+                {FormatAmount(transaction.amount)}
             </Price>
 
             <Buttons>
                 <EditTransaction transaction={transaction} />
 
                 <DeleteTransaction transaction={transaction} />
-
-                {/* <Button delete>
-                    <Icon name="trash" size={16} />
-                </Button> */}
             </Buttons>
         </Container>
     )

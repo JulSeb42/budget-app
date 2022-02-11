@@ -1,10 +1,16 @@
-const formatAmount = (num, currency) => {
+// Packages
+import { useContext } from "react"
+import { AuthContext } from "../../context/auth"
+
+function FormatAmount(num) {
+    const { user } = useContext(AuthContext)
+
     const formatter = new Intl.NumberFormat(undefined, {
         style: "currency",
-        currency: currency || "EUR",
+        currency: user.currency || "EUR",
     })
 
     return formatter.format(num)
 }
 
-export default formatAmount
+export default FormatAmount
