@@ -54,7 +54,7 @@ function ForgotPassword() {
                 reset your password.
             </Font.P>
 
-            <Form btnprimary="Send" onSubmit={handleSubmit}>
+            <Form btnprimary="Send" btncancel="/login" onSubmit={handleSubmit}>
                 <Input
                     label="Email"
                     type="email"
